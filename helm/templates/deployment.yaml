@@ -1,26 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: {{ include "mychart.fullname" . }}
-  labels:
-    app.kubernetes.io/name: {{ include "mychart.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+  name: mypod
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "mychart.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: {{ include "mychart.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
-    spec:
-      containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
+  containers:
+    - name: myfrontend
+      image: nginx
